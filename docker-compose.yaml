@@ -1,0 +1,68 @@
+version: '3'
+volumes:
+    postgres:
+
+services:
+  db:
+    container_name: dbspring_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "teste"
+#      PGDATA: "/data/postgres"
+    volumes:
+       - postgres:/data/postgres
+       - ./banco/docker/volume_postgres:/var/lib/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  db-flyway:
+    build: ./flyway/
+    image: db-flyway:latest
+    container_name: db-flyway
+    environment:
+      - FLYWAY_DEFAULT_SCHEMA=teste
+      - FLYWAY_URL=jdbc:postgresql://db:5432/teste
+      - FLYWAY_SCHEMAS=teste
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=postgres
+      - FLYWAY_PLACEHOLDER_REPLACEMENT=true
+    command:
+      - info
+      - repair
+      - migrate
+      - info
+    depends_on:
+      db:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: backend
+    image: backend
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    environment:
+      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      - PROFILE=dev
+    links:
+      - db
+    depends_on:
+      - db-flyway
+  
+  frontend:
+    build:
+      context: frontend
+    image: frontend
+    ports:
+      - '4200:80'
+    depends_on:
+      - backend

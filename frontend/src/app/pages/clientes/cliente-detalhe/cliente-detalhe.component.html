@@ -1,0 +1,36 @@
+<app-home></app-home>
+<div class="fclientes" id="clientes">
+    <h3>Consulta Clientes</h3>
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Procurar..." [formControl]="campoProcura" />
+        <button (click)="findByName()" type="button" class="btn btn-outline-success my-2 my-sm-0">Procurar</button>
+    </form>
+    <div class="conteudocliente">
+        <div class="conteudoform">
+            <a routerLink="/cliente-cadastro" class="btn btn-success">Novo</a>
+            <table class="conteudotable">
+                <thead class="conteudoheadtable">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Endereço</th>
+                        <th>Limite de Crédito</th>
+                        <th>Limite da Parcela</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of clientes">
+                        <td>{{c.nomeCli}}</td>
+                        <td>{{c.endCli}}</td>
+                        <td>{{c.limiteCred}}</td>
+                        <td>{{c.limiteParc}}</td>
+                        <td>
+                            <button (click)="delete(c.id)" type="button" class="btn btn-danger">Deletar</button>
+                            <button (click)="update(c)" class="btn btn-warning">Update</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

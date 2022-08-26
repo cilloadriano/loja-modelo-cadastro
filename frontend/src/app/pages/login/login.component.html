@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="flogin">
+    <h3>Faça seu Login</h3>
+</div>
+
+<div class="conteudologin">
+
+    <form class="conteudoform" [formGroup]="loginForm" (submit)="submitLogin()">
+
+        <div class="logo">
+            <img src="assets/cadeado.png" class="imagelogo" />
+        </div>
+
+        <div>
+            <div>
+                <input class="input-login" placeholder="Sem Cadastro" formControlName="email" />
+            </div>
+            <small *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched"
+                class="text-danger d-block mt-2">
+                Campo Obrigatório!
+            </small>
+        </div>
+
+        <div>
+            <div>
+                <input class="input-login" type="password" placeholder="Sem Cadastro" formControlName="senha" />
+            </div>
+            <small *ngIf="loginForm.get('senha')?.errors?.['required'] && loginForm.get('senha')?.touched"
+                class="text-danger d-block mt-2">
+                Campo Obrigatório!
+            </small>
+        </div>
+
+        <div>
+            <button class="input-submit" routerLink="/home"> Logar </button>
+        </div>
+
+    </form>
+
+</div>
+<router-outlet></router-outlet>

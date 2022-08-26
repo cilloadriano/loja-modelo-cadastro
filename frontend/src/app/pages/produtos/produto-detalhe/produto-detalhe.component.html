@@ -1,0 +1,35 @@
+<app-home></app-home>
+<div class="fprodutos">
+    <h3>Consulta Produtos</h3>
+    <form class="form-inline my-2 my-lg-0" >
+        <input class="form-control mr-sm-2" type="text" placeholder="Procurar..." [formControl]="campoProcura" />
+        <button (click)="findByName()" type="button" class="btn btn-outline-success my-2 my-sm-0">Procurar</button>
+    </form>
+    <div class="conteudoproduto">
+        <div class="conteudoform">
+            <a routerLink="/produto-cadastro" class="btn btn-success">Novo</a>
+            <table class="conteudotable">
+                <thead class="conteudoheadtable">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Ação</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of produtos">
+                        <td>{{p.nomeProd}}</td>
+                        <td>{{p.descProd}}</td>
+                        <td>{{p.valorProd}}</td>
+                        <td>
+                            <button (click)="delete(p.id)" type="button" class="btn btn-danger">Deletar</button>
+                            <button (click)="update(p)" type="button" class="btn btn-warning">Update</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

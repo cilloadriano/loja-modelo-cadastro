@@ -1,0 +1,49 @@
+<app-home></app-home>
+<div class="fCadastro">
+  <h3>Cadastro Clientes</h3>
+  <div class="conteudoCadastro">
+    <form class="conteudoform" [formGroup]="formgroup">
+      <div>
+        <div>
+          <input type="text" class="cliente" placeholder="Nome do Cliente" formControlName="nomecliente"
+            [(ngModel)]="cliente.nomeCli" required />
+        </div>
+
+
+      </div>
+      <div>
+        <div>
+          <input type="text" class="cliente" placeholder="Endereço" formControlName="enderecocliente"
+            [(ngModel)]="cliente.endCli" requerid />
+        </div>
+
+
+      </div>
+      <div>
+        <div>
+          <input type="number" class="cliente" placeholder="Limite de Crédito" formControlName="limiteCredito"
+            [(ngModel)]="cliente.limiteCred" required />
+        </div>
+
+
+      </div>
+      <div>
+        <div>
+          <input type="number" class="cliente" placeholder="Limite da Parcela" formControlName="limiteParcela"
+            [(ngModel)]="cliente.limiteParc" required />
+        </div>
+
+        <small class="text-danger d-block mt-2">
+          Todos os campos são obrigatórios!
+        </small>
+      </div>
+
+      <div>
+        <button (click)="create()" class="btn btn-success" [disabled]="!formgroup.valid">Salvar</button>
+        <button class="btn btn-secondary" routerLink="/cliente-detalhe">
+          Voltar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
